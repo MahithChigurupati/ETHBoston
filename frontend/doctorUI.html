@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        form {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px #ccc;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type=text] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0px 0px 5px #ccc;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        button[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type=submit]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+
+    <script src="https://cdn-staging.waev.com/waev.js"></script>
+
+
+    <script type="text/javascript">
+        const waev = new Waev("84d04be0-82a2-4b96-9c06-f2c4fbb37565", "819784256BBDED7CD98DE613EE89D441", "#testFinal");
+
+        (async () => {
+            try {
+                const data = await waev.list();
+                console.log(data);
+                (data.data || []).forEach(async (record) => {
+                    const full = await waev.read(record.id);
+                    console.log("---- full:", full);
+                });
+                // Process the data as needed
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        })();
+
+
+    </script>
+
+    <!-- <script src="https://cdn-staging.waev.com/waev.js"></script>
+    <script type="text/javascript">
+        const waev = new Waev("5c9cfbea-45ff-45a0-8afa-ae1960fad75d", "FEA6FD19E0BB98EA0C052254B05B71FF", "#testFinal");
+        function handleSubmit() {
+            alert("Data submitted!");
+        }
+
+        (async () => {
+           try {
+               const data = await waev.list();
+               console.log(data);
+               (data.data || []).forEach(async (record) => {
+           const full = await waev.read(record.id);
+           console.log("---- full:", full);
+         });
+        } catch (error) {
+               console.error("Error:", error);
+           }
+       })();
+
+
+    </script> -->
+</head>
+<body>
+<!-- <form id="testFinal">
+    <label for="test1">Test 1:</label>
+    <input type="text" id="test1" name="test1" placeholder="Enter test 1 value">
+    <label for="test2">Test 2:</label>
+    <input type="text" id="test2" name="test2" placeholder="Enter test 2 value">
+    <label for="test3">Test 3:</label>
+    <input type="text" id="test3" name="test3" placeholder="Enter test 3 value">
+    <button type="submit" onclick="handleSubmit()">Submit</button>
+</form> -->
+
+<form id="testFinal" method="get" onsubmit="event.preventDefault();">
+    <input
+            type="text"
+            placeholder="Search..."
+            value={searchText}
+            onChange={this.handleInputChange}
+    />
+    <button type="submit" onClick={this.handleFormSubmit}>Search</button>
+    <div className='form-container'>
+        <label htmlFor="PatientName">Patient Name:</label>
+        <input type="text" id="PatientName" name="PatientName" placeholder="Enter Patient Name" />
+        <label htmlFor="HealthID">Health ID:</label>
+        <input type="text" id="HealthID" name="HealthID" placeholder="Enter test 2 value" />
+        <label htmlFor="Age"> Age:</label>
+        <input type="text" id="Age" name="Age" placeholder="Enter age value" />
+
+        <label htmlFor="Weight">Weight:</label>
+        <input type="text" id="Weight" name="Weight" placeholder="Enter Patient Name" />
+        <label htmlFor="Height">Height:</label>
+        <input type="text" id="Height" name="Height" placeholder="Enter Patient Name" />
+
+
+        <label htmlFor="Phone">Phone</label>
+        <input type="text" id="Phone" name="Phone" placeholder="Enter test 2 value" />
+        <label htmlFor="Email">Email:</label>
+        <input type="text" id="Email" name="Email" placeholder="Enter Patient Name" />
+
+        <label htmlFor="Hospital"> Hospital:</label>
+        <input type="text" id="Hospital" name="Hospital" placeholder="Enter age value" />
+        <label htmlFor="Doctor">Doctor:</label>
+        <input type="text" id="Doctor" name="Doctor" placeholder="Enter Patient Name" />
+
+        <label htmlFor="Notes">Notes:</label>
+        <input type="text" id="Notes" name="Notes" placeholder="Enter Patient Name" />
+        <label htmlFor="Prescription">Prescription</label>
+        <input type="text" id="Prescription" name="Prescription" placeholder="Enter test 2 value" />
+
+        <label htmlFor="Systole">Systole</label>
+        <input type="text" id="Systole" name="Systole" placeholder="Enter test 2 value" />
+        <label htmlFor="Diastole"> Diastole:</label>
+        <input type="text" id="Diastole" name="Diastole" placeholder="Enter age value" />
+
+
+
+        <label htmlFor="Diabetes_before">Diabetes_before</label>
+        <input type="text" id="Diabetes_before" name="Diabetes_before" placeholder="Enter test 2 value" />
+        <label htmlFor="Diabetes_after"> Diabetes_after:</label>
+        <input type="text" id="Diabetes_after" name="Diabetes_after" placeholder="Enter age value" />
+
+    </div>
+    <button type="submit" onClick={this.handleSubmit} className='sbt-btn'>
+        Submit
+    </button>
+</form>
+</body>
+</html>
