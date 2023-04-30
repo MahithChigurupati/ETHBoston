@@ -4,6 +4,7 @@ import React, { useContext, createContext, useState } from 'react';
 import '../App.css';
 import { ethers, Contract, Signer } from 'ethers';
 import { useLocation, useParams } from 'react-router-dom';
+import Card from '../Cards/card';
 import { Form, Button } from 'react-bootstrap';
 import { MyContext } from './Context';
 import ABI from '../contractArtifact/Insurance.json';
@@ -17,6 +18,10 @@ function InsuranceComponent() {
 
   const [walletAddress, setWalletAddress] = useContext(MyContext);
 
+  const [contract, setContract] = useState();
+
+  const [price, setPrice] = useState();
+
   const [formData, setFormData] = useState({
     patientName: '',
     healthID: '',
@@ -24,6 +29,8 @@ function InsuranceComponent() {
     // patientEmail: '',
     // patientPhNo: ''
   })
+
+  const colors=[{"id": "1", "image":"FB"},{"id": "2", "image":"LinkedIn"},{"id": "3", "image":"Twitter"}]
 
   // const location = useLocation();
   // var walletAddress = location.state.walletAddr;
@@ -38,10 +45,14 @@ function InsuranceComponent() {
     const dutchAuctionContract = await dutchAuctionContractFactory.deploy();
     setContractAddress(dutchAuctionContract.address);
     await dutchAuctionContract.deployed();
-    let currPrc = await dutchAuctionContract.generateQuote(formData.patientAge, formData.healthID);
-    let currentPrice = ethers.utils.formatEther(currPrc);
+    console.log(dutchAuctionContract);
+    setContract(dutchAuctionContract);
+    let currPrc =  await dutchAuctionContract.generateQuote(formData.patientAge, formData.healthID);
+    
+    //let currentPrice = ethers.utils.formatEther(currPrc);
+   //console.log(currentPrice);
     console.log(contractAddress)
-    console.log(parseInt(currPrc,10));
+    console.log(parseInt(currPrc.value,10));
   }
 
   function handleFormChange(e) {
@@ -60,6 +71,37 @@ function InsuranceComponent() {
       alert('Data submitted!');
       deployAuctionContract();
   };
+
+  const handleRecall = async (e) => {
+    e.preventDefault();
+
+    let finalPrc =  await contract.getPricing(formData.healthID);
+    //let currentPrice = ethers.utils.formatEther(currPrc);
+   //console.log(currentPrice);
+    // console.log(contractAddress)
+    setPrice(finalPrc);
+    console.log(price);
+  }
+
+  const handleBuy = async (e) => {
+    e.preventDefault();
+    console.log(price);
+    let finalPrc =  await contract.buy(formData.healthID);
+    //let currentPrice = ethers.utils.formatEther(currPrc);
+   //console.log(currentPrice);
+    console.log(finalPrc);
+  
+  }
+
+  const handlePolicyDet = async (e) => {
+    e.preventDefault();
+
+    let finalDet =  await contract.getPolicy();
+    //let currentPrice = ethers.utils.formatEther(currPrc);
+   //console.log(currentPrice);
+    console.log(parseInt(finalDet,10));
+  
+  }
 
   console.log(formData)
 
@@ -129,7 +171,20 @@ function InsuranceComponent() {
         <Button type="submit" onClick={handleSubmit} className='sbt-btn'>
           Submit
         </Button>
+        <Button type="submit" onClick={handleRecall} className='sbt-btn'>
+          Get Quote
+        </Button>
+        <Button type="submit" onClick={handleBuy} className='sbt-btn'>
+          Buy
+        </Button>
+        <Button type="submit" onClick={handlePolicyDet} className='sbt-btn'>
+          Get Policy Details
+        </Button>
       </Form>
+      {/* <h2 style={{textAlign: 'center' }}>Jobs</h2> */}
+      <div style={{ textAlign: 'center' }}>
+      {colors.map((selectedColor) => (<Card key={selectedColor.id} text={selectedColor.image}></Card>))}
+      </div>
     </div>
     );
   // }
