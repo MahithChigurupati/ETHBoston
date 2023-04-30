@@ -3,11 +3,12 @@
 import React, { Component, useContext, useState } from 'react';
 import '../App.css';
 import { Form, Button } from 'react-bootstrap';
-
-
+import CardResearch from '../Cards/cardResearch';
 import {ethers, Contracts, Signer} from 'ethers';
 import ABI from '../contractArtifact/Research.json';
-
+import heart from '../images/heart_disease.jpeg';
+import diabetes from '../images/diabetes.jpeg';
+import lung from '../images/lung.jpeg';
 
 function ResearchComponent() {
 
@@ -38,7 +39,7 @@ function ResearchComponent() {
         ResearchContract.mint();
 
         console.log("complete");
-        
+
         console.log(ResearchContract.balanceOf('0xb1c8Ad5D705A20e68B83001554B8E135426CD44A'));
     }
 
@@ -69,13 +70,45 @@ function ResearchComponent() {
     // perform search operation with searchText
   };
 
+  var val2 = `Data Needed :-\n1. Age\n
+  2. Gender\n
+  3. Chest pain type\n
+  4. Blood Pressure Level\n
+  5. Cholestroll\n
+  6. Fasting Blood Sugar:\n
+   
+  
+  7. Thalassemia\n
+  
+  8. Heart Disease`;
 
+  var val3 = `Data Needed :-\n1. Gender \n2. Age \n3. Hyper Tension \n4. Heart Disease \n5. Smoking History \n6. BMI \n7. HbA1c_level \n8. Blood Glucose Level \n9. Diabetes `
+
+
+  var val1 = `Data Needed :-\n1. Gender\n
+  2. Age \n
+  3. Smoking\n
+  4. Yellow fingers\n
+  5. Anxiety\n
+  6. Peer_pressure\n
+  7. Chronic Disease\n
+  8. Fatigue\n
+  9. Allergy\n`
+  
+  const colors=[{"id": "1", "image":diabetes,"title":"Diabetes Prediction", "information":val3},
+                
+                {"id": "2", "image":heart, "title":" Heart Disease Prediction","information":val2},
+                {"id": "3", "image":lung, "title":" Lung Cancer Prediction","information":val1}
+                ]
+ 
+    
+    
 
   //render() {
     return (
       <div className="doctor-form-container">
-      <h2>Pharmacy's Window</h2>
-      <Form style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <h2>Volunteer for Research Study</h2>
+      {/* <Form style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
   <Form.Control
     type="text"
     placeholder="Search..."
@@ -84,14 +117,18 @@ function ResearchComponent() {
     style={{ maxWidth: "600px", marginRight: "10px" }}
   />
   <Button type="submit" onClick={handleFormSubmit}>Search</Button>
-</Form>
+</Form> */}
+        
+        <div>
+            <h2 style={{textAlign: 'center' }}>Active Studies</h2>
+            <div style={{ textAlign: 'center' }}>
+            {colors.map((selectedColor) => (<><CardResearch title = {selectedColor.title} information = {selectedColor.information} key={selectedColor.id} image={selectedColor.image}> </CardResearch><Button onClick={deployResearchContract}>
+                Opt for Data Collection
+            </Button></>) )}
+            </div>
+            </div>
 
-        <Button onClick={deployResearchContract}>
-        opt for data collection
-        </Button>
-
-      
-      <Form id="testFinal" className="your-component">
+      {/* <Form id="testFinal" className="your-component">
         <div className='form-container'>
           <Form.Group>
             <Form.Label htmlFor="test1">Patient Name:</Form.Label>
@@ -117,7 +154,7 @@ function ResearchComponent() {
         <Button type="submit" onClick={handleSubmit} className='sbt-btn'>
           Submit
         </Button>
-      </Form>
+      </Form> */}
     </div>
     );
   // }
