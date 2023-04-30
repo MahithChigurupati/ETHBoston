@@ -22,6 +22,8 @@ function InsuranceComponent() {
 
   const [price, setPrice] = useState();
 
+  const [policyDetails, setPolicyDetails] = useState();
+
   const [formData, setFormData] = useState({
     patientName: '',
     healthID: '',
@@ -30,7 +32,7 @@ function InsuranceComponent() {
     // patientPhNo: ''
   })
 
-  const colors=[{"id": "1", "image":"FB"},{"id": "2", "image":"LinkedIn"},{"id": "3", "image":"Twitter"}]
+  const colors=[{"id": "1", "title":"Price in USD", "image":parseInt(price,10)},{"id": "2", "title":"Policy Number", "image":policyDetails}]
 
   // const location = useLocation();
   // var walletAddress = location.state.walletAddr;
@@ -99,7 +101,8 @@ function InsuranceComponent() {
     let finalDet =  await contract.getPolicy();
     //let currentPrice = ethers.utils.formatEther(currPrc);
    //console.log(currentPrice);
-    console.log(parseInt(finalDet,10));
+    setPolicyDetails(parseInt(finalDet,10));
+    console.log(policyDetails);
   
   }
 
@@ -183,7 +186,7 @@ function InsuranceComponent() {
       </Form>
       {/* <h2 style={{textAlign: 'center' }}>Jobs</h2> */}
       <div style={{ textAlign: 'center' }}>
-      {colors.map((selectedColor) => (<Card key={selectedColor.id} text={selectedColor.image}></Card>))}
+      {colors.map((selectedColor) => (<Card key={selectedColor.id} title = {selectedColor.title} text={selectedColor.image}></Card>))}
       </div>
     </div>
     );
